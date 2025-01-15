@@ -1,0 +1,7 @@
+{
+    "col_product_name": "JsonProductName",
+    "col_price": "JsonPrice",
+    "col_delivery_days": "JsonDeliveryDays",
+    "col_description": "JsonDescription",
+    "col_discount": "JsonDiscount"
+}

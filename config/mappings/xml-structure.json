@@ -1,0 +1,7 @@
+{
+    "col_product_name": "XMLProductName",
+    "col_price": "XMLPrice",
+    "col_delivery_days": "XMLDeliveryDays",
+    "col_description": "XMLDescription",
+    "col_discount": "XMLDiscount"
+}

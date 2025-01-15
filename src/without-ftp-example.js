@@ -38,13 +38,16 @@ const genericDataConverter = async (filePath, fileType) => {
             throw new Error('Unsupported file type');
     }
 
+    // Get the structure mapping from the JSON file based on the file type
+    const structure = await parseJSON(`config/mappings/${fileType}-structure.json`);
+
     // Map the data to a consistent JSON structure
     const genericDataStructure = rawData.map((item) => ({
-        productName: item.CSVProductName || item.JsonProductName || item.ExcelProductName || item.XMLProductName || '',
-        price: parseFloat(item.CSVPrice || item.JsonPrice || item.ExcelPrice || item.XMLPrice || 0),
-        deliveryDays: parseInt(item.CSVDeliveryDays || item.JsonDeliveryDays || item.ExcelDeliveryDays || item.XMLDeliveryDays || 0, 10),
-        description: item.CSVDescription || item.JsonDescription || item.ExcelDescription || item.XMLDescription || '',
-        discount: parseFloat(item.CSVDiscount || item.JsonDiscount || item.ExcelDiscount || item.XMLDiscount || 0),
+        productName: item[structure.col_product_name] || '',
+        price: parseFloat(item[structure.col_price] || 0),
+        deliveryDays: parseInt(item[structure.col_delivery_days] || 0, 10),
+        description: item[structure.col_description] || '',
+        discount: parseFloat(item[structure.col_discount] || 0),
     }));
 
     return genericDataStructure;
