@@ -34,7 +34,7 @@ This project is a Proof of Concept (POC) for parsing and normalizing data into a
 2. **Run the data normalizer**:
 
    ```bash
-   npm start
+   node src/without-ftp-example.js
    ```
 
 <!-- 3. **Output**: The normalized JSON data will be available in the `data/output` directory. -->
