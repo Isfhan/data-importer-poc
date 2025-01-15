@@ -1,0 +1,23 @@
+[
+    {
+        "JsonProductName": "Widget json A",
+        "JsonPrice": "19.99",
+        "JsonDeliveryDays": "3",
+        "JsonDescription": "High-quality widget",
+        "JsonDiscount": "5"
+    },
+    {
+        "JsonProductName": "Widget json B",
+        "JsonPrice": "29.99",
+        "JsonDeliveryDays": "5",
+        "JsonDescription": "Durable widget",
+        "JsonDiscount": "10"
+    },
+    {
+        "JsonProductName": "Widget json C",
+        "JsonPrice": "39.99",
+        "JsonDeliveryDays": "7",
+        "JsonDescription": "Premium widget",
+        "JsonDiscount": "15"
+    }
+]
