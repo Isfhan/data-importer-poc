@@ -6,13 +6,14 @@ This project is a Proof of Concept (POC) for ArrowLine pallets data parsing and 
 
 - **Data Parsing**: Processes input data to extract relevant information.
 - **Data Normalization**: Transforms parsed data into a standardized JSON format.
+- **Data Storage**: Persists the normalized JSON data into a database.
 
 ## Installation
 
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/Ve2Max/data-normalizer-poc.git
+   git clone https://github.com/Ve2Max/data-importer-poc.git
    ```
 
 2. **Navigate to the project directory**:
