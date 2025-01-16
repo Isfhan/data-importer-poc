@@ -1,9 +1,12 @@
 {
   "name": "data-importer-poc",
-  "version": "1.0.0",
-  "main": "src/index.js",
+  "version": "0.1.0",
+  "main": "dist/without-ftp-example.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./dist/without-ftp-example.js",
+    "build": "npm run clean && tsc && npm run copy-files",
+    "clean": "rimraf dist/",
+    "copy-files": "copyfiles -u 1 src/**/*.{csv,xml,json,xlsx} dist/"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +18,12 @@
     "csv-parser": "^3.1.0",
     "fs-extra": "^11.2.0",
     "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.10.7",
+    "@types/xml2js": "^0.4.14",
+    "copyfiles": "^2.4.1",
+    "rimraf": "^6.0.1"
   }
 }

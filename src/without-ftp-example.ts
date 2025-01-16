@@ -1,16 +1,16 @@
 // Imports required parsers
-const { parseXML, parseCSV, parseXLSX, parseJSON } = require('./parsers');
-
+import { parseXML, parseCSV, parseXLSX, parseJSON } from './parsers.js';
 
 /**
- * Generic data converter that can handle CSV, JSON, XLSX, and XML files.
- * It maps the file data to a consistent JSON structure, regardless of the file type.
- * @param {string} filePath - The path to the file to be converted.
- * @param {string} fileType - The type of the file (csv, json, xlsx, xml).
- * @returns {Array} An array of objects, each containing the normalized data.
+ * Generic data converter function that can parse and convert different types of data (XML, CSV, XLSX, JSON) into a consistent JSON structure.
+ * @param {string} filePath - Path to the file to be parsed.
+ * @param {string} fileType - Type of the file to be parsed (xml, csv, xlsx, json).
+ * @returns {Promise<Object[]>} - A promise resolving to an array of objects representing the parsed data in a consistent JSON structure.
  */
-const genericDataConverter = async (filePath, fileType) => {
-
+const genericDataConverter = async (
+    filePath: string,
+    fileType: 'xml' | 'csv' | 'xlsx' | 'json'
+) => {
     // Declare a variable to store the raw data
     let rawData;
 
@@ -39,10 +39,12 @@ const genericDataConverter = async (filePath, fileType) => {
     }
 
     // Get the structure mapping from the JSON file based on the file type
-    const structure = await parseJSON(`config/mappings/${fileType}-structure.json`);
+    const structure = await parseJSON(
+        `./dist/config/mappings/${fileType}-structure.json`
+    );
 
     // Map the data to a consistent JSON structure
-    const genericDataStructure = rawData.map((item) => ({
+    const genericDataStructure = rawData.map((item: any) => ({
         productName: item[structure.col_product_name] || '',
         price: parseFloat(item[structure.col_price] || 0),
         deliveryDays: parseInt(item[structure.col_delivery_days] || 0, 10),
@@ -56,20 +58,22 @@ const genericDataConverter = async (filePath, fileType) => {
 // Example usage of the generic data converter
 (async () => {
     try {
-
         // Replace with your file path
-        const filePath = 'data/input/sample.xml';
+        const filePath = './dist/data/input/sample.csv';
 
         // Get the actual file type (e.g., xml, json, csv, xlsx)
-        const fileType = filePath.split('.').pop();
+        const fileType = filePath.split('.').pop() as
+            | 'xml'
+            | 'csv'
+            | 'xlsx'
+            | 'json';
 
-        // Invoke the generic data converter 
+        // Invoke the generic data converter
         const genericData = await genericDataConverter(filePath, fileType);
 
         // Print the output
         console.log('genericData JSON Output:', genericData);
-
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error:', error.message);
     }
 })();

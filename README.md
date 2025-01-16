@@ -30,26 +30,15 @@ This project is a Proof of Concept (POC) for ArrowLine pallets data parsing and 
 
 ## Usage
 
-1. **Prepare your input data**: Place your data files in the `data/input` directory.
+1. **Prepare your input data**: Place your data files in the `src/data/input` directory.
 
-2. **Run the data normalizer**:
-
+2. **Run build**:
    ```bash
-   node src/without-ftp-example.js
+   npm run build
    ```
 
-<!-- 3. **Output**: The normalized JSON data will be available in the `data/output` directory. -->
+3. **Run the data normalizer**:
 
-## Project Structure
-
-```plaintext
-data-importer-poc/
-├── config/             # Configuration files
-├── data/
-│   ├── input/          # Input data files
-│   └── output/         # Output normalized JSON files
-├── src/                # Source code
-├── .gitignore          # Git ignore file
-├── package-lock.json   # Package lock file
-├── package.json        # Package configuration
-```
+   ```bash
+   npm run start
+   ```

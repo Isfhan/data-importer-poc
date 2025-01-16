@@ -1,0 +1,23 @@
+<Products>
+    <Product>
+        <XMLProductName>Widget XML A</XMLProductName>
+        <XMLPrice>19.99</XMLPrice>
+        <XMLDeliveryDays>3</XMLDeliveryDays>
+        <XMLDescription>High-quality widget</XMLDescription>
+        <XMLDiscount>5</XMLDiscount>
+    </Product>
+    <Product>
+        <XMLProductName>Widget XML B</XMLProductName>
+        <XMLPrice>29.99</XMLPrice>
+        <XMLDeliveryDays>5</XMLDeliveryDays>
+        <XMLDescription>Durable widget</XMLDescription>
+        <XMLDiscount>10</XMLDiscount>
+    </Product>
+    <Product>
+        <XMLProductName>Widget XML C</XMLProductName>
+        <XMLPrice>39.99</XMLPrice>
+        <XMLDeliveryDays>7</XMLDeliveryDays>
+        <XMLDescription>Premium widget</XMLDescription>
+        <XMLDiscount>15</XMLDiscount>
+    </Product>
+</Products>

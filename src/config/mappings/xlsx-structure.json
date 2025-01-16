@@ -1,0 +1,7 @@
+{
+    "col_product_name": "ExcelProductName",
+    "col_price": "ExcelPrice",
+    "col_delivery_days": "ExcelDeliveryDays",
+    "col_description": "ExcelDescription",
+    "col_discount": "ExcelDiscount"
+}
