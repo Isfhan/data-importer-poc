@@ -1,5 +1,5 @@
 {
-  "name": "data-normalizer",
+  "name": "data-importer-poc",
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {

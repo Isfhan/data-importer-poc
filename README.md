@@ -1,6 +1,6 @@
-# Data Normalizer POC
+# Data Importer POC
 
-This project is a Proof of Concept (POC) for parsing and normalizing data into a consistent JSON structure.
+This project is a Proof of Concept (POC) for ArrowLine pallets data parsing and normalizing data into a consistent JSON structure and save it in database.
 
 ## Features
 
@@ -12,13 +12,13 @@ This project is a Proof of Concept (POC) for parsing and normalizing data into a
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/Isfhan/data-normalizer-poc.git
+   git clone https://github.com/Ve2Max/data-normalizer-poc.git
    ```
 
 2. **Navigate to the project directory**:
 
    ```bash
-   cd data-normalizer-poc
+   cd data-importer-poc
    ```
 
 3. **Install dependencies**:
@@ -42,7 +42,7 @@ This project is a Proof of Concept (POC) for parsing and normalizing data into a
 ## Project Structure
 
 ```plaintext
-data-normalizer-poc/
+data-importer-poc/
 ├── config/             # Configuration files
 ├── data/
 │   ├── input/          # Input data files
