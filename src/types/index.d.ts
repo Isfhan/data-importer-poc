@@ -1,0 +1,1 @@
+export type FileType = 'xml' | 'csv' | 'xlsx' | 'json';

@@ -1,7 +1,7 @@
 {
-    "col_product_name": "CSVProductName",
-    "col_price": "CSVPrice",
-    "col_delivery_days": "CSVDeliveryDays",
-    "col_description": "CSVDescription",
-    "col_discount": "CSVDiscount"
+    "product_name": "CSVProductName",
+    "price": "CSVPrice",
+    "delivery_days": "CSVDeliveryDays",
+    "description": "CSVDescription",
+    "discount": "CSVDiscount"
 }
