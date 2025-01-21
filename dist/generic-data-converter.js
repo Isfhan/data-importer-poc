@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Imports required parsers
 const parsers_js_1 = require("./parsers.js");
+// Imports uuid
+const uuid_1 = require("uuid");
 class DataConverter {
     // Private properties
     filePath;
@@ -41,11 +43,30 @@ class DataConverter {
      * @returns {Array<Object>} - An array of objects with the mapped data.
      */
     createGenericDataStructure(structure, rawData) {
+        // Return the mapped data
         return rawData.map((item) => {
+            // Initialize the mapped item object
             const mappedItem = {};
+            // Loop through the structure and add the values to the mapped item
             for (const [genericFieldName, dataColumnName] of Object.entries(structure)) {
-                mappedItem[genericFieldName] = item[dataColumnName] || '';
+                // Handle the id field
+                if (genericFieldName === 'id') {
+                    // If the value is not present so generate a uuid
+                    if (['', null, undefined].includes(item[dataColumnName]?.trim())) {
+                        // Generate a UUID and add it to the mapped item
+                        mappedItem[genericFieldName] = (0, uuid_1.v4)();
+                    }
+                    else {
+                        // Add the value to the mapped item
+                        mappedItem[genericFieldName] = item[dataColumnName];
+                    }
+                }
+                else {
+                    // Add the value to the mapped item
+                    mappedItem[genericFieldName] = item[dataColumnName] || '';
+                }
             }
+            // Return the mapped item object
             return mappedItem;
         });
     }
@@ -54,8 +75,11 @@ class DataConverter {
      * @returns {Promise<Object[]>} - A promise resolving to an array of objects representing the parsed data in a consistent JSON structure.
      */
     async convertData() {
+        // Get the raw data from the file
         const rawData = await this.getRawData();
+        // Get the mapping structure json
         const structure = await (0, parsers_js_1.parseJSON)(`./dist/config/mappings/${this.fileType}-structure.json`);
+        // Map the raw data to the structure and convert it to JSON
         return this.createGenericDataStructure(structure, rawData);
     }
 }

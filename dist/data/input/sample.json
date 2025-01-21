@@ -1,20 +1,23 @@
 [
     {
-        "JsonProductName": "Widget json A",
+        "JsonId": "e06ee0f8-e2cf-4b6a-98d0-640c2373bdc7",
+        "JsonProductName": "Widget json A update 123",
         "JsonPrice": "19.99",
         "JsonDeliveryDays": "3",
         "JsonDescription": "High-quality widget",
         "JsonDiscount": "5"
     },
     {
-        "JsonProductName": "Widget json B",
+        "JsonId": null,
+        "JsonProductName": "Widget json B new",
         "JsonPrice": "29.99",
         "JsonDeliveryDays": "5",
         "JsonDescription": "Durable widget",
         "JsonDiscount": "10"
     },
     {
-        "JsonProductName": "Widget json C",
+        "JsonId": "",
+        "JsonProductName": "Widget json C new",
         "JsonPrice": "39.99",
         "JsonDeliveryDays": "7",
         "JsonDescription": "Premium widget",

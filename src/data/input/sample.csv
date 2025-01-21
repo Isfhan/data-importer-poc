@@ -1,4 +1,4 @@
-CSVProductName,CSVPrice,CSVDeliveryDays,CSVDescription,CSVDiscount
-Widget CSV A,19.99,3,High-quality widget,5
-Widget CSV B,29.99,5,Durable widget,10
-Widget CSV C,39.99,7,Premium widget,15
+CSVId,CSVProductName,CSVPrice,CSVDeliveryDays,CSVDescription,CSVDiscount
+,Widget CSV A new,19.99,3,High-quality widget,5
+,Widget CSV B update,29.99,5,Durable widget,10
+,Widget CSV C new,39.99,7,Premium widget,15

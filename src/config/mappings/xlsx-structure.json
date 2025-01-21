@@ -1,4 +1,5 @@
 {
+    "id": "ExcelId",
     "product_name": "ExcelProductName",
     "price": "ExcelPrice",
     "delivery_days": "ExcelDeliveryDays",

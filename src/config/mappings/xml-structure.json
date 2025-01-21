@@ -1,4 +1,5 @@
 {
+    "id": "XMLId",
     "product_name": "XMLProductName",
     "price": "XMLPrice",
     "delivery_days": "XMLDeliveryDays",

@@ -1,20 +1,24 @@
 <Products>
     <Product>
-        <XMLProductName>Widget XML A</XMLProductName>
+
+        <XMLId> </XMLId> 
+        <XMLProductName>Widget XML A new</XMLProductName>
         <XMLPrice>19.99</XMLPrice>
         <XMLDeliveryDays>3</XMLDeliveryDays>
         <XMLDescription>High-quality widget</XMLDescription>
         <XMLDiscount>5</XMLDiscount>
     </Product>
     <Product>
-        <XMLProductName>Widget XML B</XMLProductName>
+        <XMLId>757502f1-9475-4e59-b114-af256e7abf2c</XMLId>
+        <XMLProductName>Widget XML B update</XMLProductName>
         <XMLPrice>29.99</XMLPrice>
         <XMLDeliveryDays>5</XMLDeliveryDays>
         <XMLDescription>Durable widget</XMLDescription>
         <XMLDiscount>10</XMLDiscount>
     </Product>
     <Product>
-        <XMLProductName>Widget XML C</XMLProductName>
+        <XMLId></XMLId>
+        <XMLProductName>Widget XML C new</XMLProductName>
         <XMLPrice>39.99</XMLPrice>
         <XMLDeliveryDays>7</XMLDeliveryDays>
         <XMLDescription>Premium widget</XMLDescription>

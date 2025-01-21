@@ -1,6 +1,9 @@
 // Imports required parsers
 import { parseXML, parseCSV, parseXLSX, parseJSON } from './parsers.js';
 
+// Imports uuid
+import { v4 as generateUUID } from 'uuid';
+
 // Imports types
 import { FileType } from './types/index.js';
 
@@ -49,13 +52,36 @@ class DataConverter {
         structure: { [genericFieldName: string]: string },
         rawData: any[]
     ): { [genericFieldName: string]: string }[] {
+        // Return the mapped data
         return rawData.map((item) => {
+            // Initialize the mapped item object
             const mappedItem: { [key: string]: string } = {};
+
+            // Loop through the structure and add the values to the mapped item
             for (const [genericFieldName, dataColumnName] of Object.entries(
                 structure
             )) {
-                mappedItem[genericFieldName] = item[dataColumnName] || '';
+                // Handle the id field
+                if (genericFieldName === 'id') {
+                    // If the value is not present so generate a uuid
+                    if (
+                        ['', null, undefined].includes(
+                            item[dataColumnName]?.trim()
+                        )
+                    ) {
+                        // Generate a UUID and add it to the mapped item
+                        mappedItem[genericFieldName] = generateUUID();
+                    } else {
+                        // Add the value to the mapped item
+                        mappedItem[genericFieldName] = item[dataColumnName];
+                    }
+                } else {
+                    // Add the value to the mapped item
+                    mappedItem[genericFieldName] = item[dataColumnName] || '';
+                }
             }
+
+            // Return the mapped item object
             return mappedItem;
         });
     }
@@ -67,11 +93,16 @@ class DataConverter {
     public async convertData(): Promise<
         { [genericFieldName: string]: string }[]
     > {
+        // Get the raw data from the file
         const rawData = await this.getRawData();
+
+        // Get the mapping structure json
         const structure: { [genericFieldName: string]: string } =
             await parseJSON(
                 `./dist/config/mappings/${this.fileType}-structure.json`
             );
+
+        // Map the raw data to the structure and convert it to JSON
         return this.createGenericDataStructure(structure, rawData);
     }
 }

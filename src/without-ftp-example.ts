@@ -17,7 +17,7 @@ dotenv.config();
 (async () => {
     try {
         // Replace with your file path
-        const filePath = './dist/data/input/sample.xml';
+        const filePath = './dist/data/input/sample.json';
 
         // Get the actual file type (e.g., xml, json, csv, xlsx)
         const fileType = filePath.split('.').pop() as FileType;
@@ -35,8 +35,8 @@ dotenv.config();
             { db: { schema: 'test' } }
         );
 
-        // Insert data into the products table
-        const { error } = await supabase.from('products').insert(genericData);
+        // Upsert data into the products table
+        const { error } = await supabase.from('products').upsert(genericData);
 
         // Check if there is an error
         if (error) {
