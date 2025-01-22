@@ -6,18 +6,30 @@ import { v4 as generateUUID } from 'uuid';
 
 // Imports types
 import { FileType } from './types/index.js';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 class DataConverter {
     // Private properties
+    private supabase: SupabaseClient<any, 'test', any>;
+    private entityId: string;
     private filePath: string;
     private fileType: FileType;
 
     /**
-     * Initializes a new instance of the DataConverter class with the specified file path and file type.
-     * @param {string} filePath - The path to the file to be processed.
-     * @param {FileType} fileType - The type of the file (e.g., xml, csv, xlsx, json).
+     * Constructor for the DataConverter class.
+     * @param {SupabaseClient} supabase - The Supabase client instance.
+     * @param {string} entityId - The ID of the entity to which the data should be imported.
+     * @param {string} filePath - The path to the file to be converted.
+     * @param {FileType} fileType - The type of the file to be converted.
      */
-    constructor(filePath: string, fileType: FileType) {
+    constructor(
+        supabase: SupabaseClient<any, 'test', any>,
+        entityId: string,
+        filePath: string,
+        fileType: FileType
+    ) {
+        this.supabase = supabase;
+        this.entityId = entityId;
         this.filePath = filePath;
         this.fileType = fileType;
     }
@@ -29,13 +41,26 @@ class DataConverter {
     private async getRawData() {
         switch (this.fileType.toLowerCase()) {
             case 'xml':
+                // Parse the XML
                 const response = await parseXML(this.filePath);
-                return response?.Products?.Product || [];
+                // Select the 'Products' node
+                const data = response?.Products.Product || [];
+                // Return the data
+                return Array.isArray(data)
+                    ? data
+                    : [
+                          {
+                              ...data,
+                          },
+                      ];
             case 'csv':
+                // Parse the CSV
                 return await parseCSV(this.filePath);
             case 'xlsx':
+                // Parse the XLSX
                 return parseXLSX(this.filePath);
             case 'json':
+                // Parse the JSON
                 return await parseJSON(this.filePath);
             default:
                 throw new Error(`Unsupported file type: ${this.fileType}`);
@@ -76,8 +101,11 @@ class DataConverter {
                         mappedItem[genericFieldName] = item[dataColumnName];
                     }
                 } else {
-                    // Add the value to the mapped item
-                    mappedItem[genericFieldName] = item[dataColumnName] || '';
+                    // Only add the value if is exists
+                    if (item[dataColumnName]) {
+                        // Add the value to the mapped item
+                        mappedItem[genericFieldName] = item[dataColumnName];
+                    }
                 }
             }
 
@@ -96,11 +124,21 @@ class DataConverter {
         // Get the raw data from the file
         const rawData = await this.getRawData();
 
+        // Get the mapping structure json from supabase
+        const { data, error } = await this.supabase
+            .from('entities')
+            .select('file_type,mapping_config')
+            .eq('id', this.entityId)
+            .single();
+
+        // Check if there is an error
+        if (error) {
+            throw new Error(`Entity mapping error: ${error.message}`);
+        }
+
         // Get the mapping structure json
         const structure: { [genericFieldName: string]: string } =
-            await parseJSON(
-                `./dist/config/mappings/${this.fileType}-structure.json`
-            );
+            data?.mapping_config;
 
         // Map the raw data to the structure and convert it to JSON
         return this.createGenericDataStructure(structure, rawData);

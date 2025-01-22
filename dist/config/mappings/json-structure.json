@@ -1,8 +1,0 @@
-{
-    "id": "JsonId",
-    "product_name": "JsonProductName",
-    "price": "JsonPrice",
-    "delivery_days": "JsonDeliveryDays",
-    "description": "JsonDescription",
-    "discount": "JsonDiscount"
-}

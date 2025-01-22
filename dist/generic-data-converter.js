@@ -6,14 +6,20 @@ const parsers_js_1 = require("./parsers.js");
 const uuid_1 = require("uuid");
 class DataConverter {
     // Private properties
+    supabase;
+    entityId;
     filePath;
     fileType;
     /**
-     * Initializes a new instance of the DataConverter class with the specified file path and file type.
-     * @param {string} filePath - The path to the file to be processed.
-     * @param {FileType} fileType - The type of the file (e.g., xml, csv, xlsx, json).
+     * Constructor for the DataConverter class.
+     * @param {SupabaseClient} supabase - The Supabase client instance.
+     * @param {string} entityId - The ID of the entity to which the data should be imported.
+     * @param {string} filePath - The path to the file to be converted.
+     * @param {FileType} fileType - The type of the file to be converted.
      */
-    constructor(filePath, fileType) {
+    constructor(supabase, entityId, filePath, fileType) {
+        this.supabase = supabase;
+        this.entityId = entityId;
         this.filePath = filePath;
         this.fileType = fileType;
     }
@@ -24,13 +30,26 @@ class DataConverter {
     async getRawData() {
         switch (this.fileType.toLowerCase()) {
             case 'xml':
+                // Parse the XML
                 const response = await (0, parsers_js_1.parseXML)(this.filePath);
-                return response?.Products?.Product || [];
+                // Select the 'Products' node
+                const data = response?.Products.Product || [];
+                // Return the data
+                return Array.isArray(data)
+                    ? data
+                    : [
+                        {
+                            ...data,
+                        },
+                    ];
             case 'csv':
+                // Parse the CSV
                 return await (0, parsers_js_1.parseCSV)(this.filePath);
             case 'xlsx':
+                // Parse the XLSX
                 return (0, parsers_js_1.parseXLSX)(this.filePath);
             case 'json':
+                // Parse the JSON
                 return await (0, parsers_js_1.parseJSON)(this.filePath);
             default:
                 throw new Error(`Unsupported file type: ${this.fileType}`);
@@ -62,8 +81,11 @@ class DataConverter {
                     }
                 }
                 else {
-                    // Add the value to the mapped item
-                    mappedItem[genericFieldName] = item[dataColumnName] || '';
+                    // Only add the value if is exists
+                    if (item[dataColumnName]) {
+                        // Add the value to the mapped item
+                        mappedItem[genericFieldName] = item[dataColumnName];
+                    }
                 }
             }
             // Return the mapped item object
@@ -77,8 +99,18 @@ class DataConverter {
     async convertData() {
         // Get the raw data from the file
         const rawData = await this.getRawData();
+        // Get the mapping structure json from supabase
+        const { data, error } = await this.supabase
+            .from('entities')
+            .select('file_type,mapping_config')
+            .eq('id', this.entityId)
+            .single();
+        // Check if there is an error
+        if (error) {
+            throw new Error(`Entity mapping error: ${error.message}`);
+        }
         // Get the mapping structure json
-        const structure = await (0, parsers_js_1.parseJSON)(`./dist/config/mappings/${this.fileType}-structure.json`);
+        const structure = data?.mapping_config;
         // Map the raw data to the structure and convert it to JSON
         return this.createGenericDataStructure(structure, rawData);
     }
